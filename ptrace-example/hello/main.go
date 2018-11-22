@@ -6,6 +6,10 @@ import (
 )
 
 func main() {
-	fmt.Fprintf(os.Stdout, "Hello on Stdout\n")
-	fmt.Fprintf(os.Stderr, "Hello on Stderr\n")
+	fmt.Println("Hello world!")
+	fn := "/etc/passwd"
+	if _, err := os.Open(fn); err != nil {
+		fmt.Printf("open: %v", err)
+	}
+	fmt.Printf("Opened %s\n", fn)
 }
