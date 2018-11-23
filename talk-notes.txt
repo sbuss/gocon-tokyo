@@ -286,16 +286,58 @@ you're good to go.
 [ Demo the old way and the new way.
 1. show the old helloworld. highlight appengine.Main. Show running it without
    dev_appserver, and that it fails.
-2. show the new helloworld. Show running locally. Show app.yaml. Show deployment.
+2. show the new helloworld. Show running locally. Show app.yaml. Show
+   deployment.
 3. Show old vendor failing. Explain problem with the builder?
 4. Show new vendor succeeding.
 5. Show new go.mod helloworld succeeding.]
 
 # slide 23
 
+Ok, so you get all this good stuff, what's the catch? Well... you should start
+migrating away from the legacy App Engine APIs and toward the cloud APIs.
 
+The legacy APIs are great, but they are a walled garden: you have to use App
+Engine to use them. That means that you might feel locked-in to our platform.
 
+The Google Cloud APIs provide platform-independent access to all of our
+services, like Datastore and Cloud Machine Learning. There's no requirement
+that you run your code on Google Cloud or App Engine, but I do think it's the
+easiest and best product.
 
+Migrating your code to use the Cloud APIs rather than the App Engine APIs will
+take a little work, but it will future proof your app and make it possible
+to seamlessly shift from App Engine to Kubernetes or virtual machines and
+back as needed.
+
+# slide 24
+
+check out this URLs to learn how to migrate. Or, you know, just look on
+stack overflow.
+
+# slide 25
+
+I'm really excited to be working on this runtime, and to be working on Google
+Cloud. I love Go and the future of cloud at Google is built on it. All of these
+products are written in go: from gVisor, the core virtualization technology for
+App Engine second gen, to the runtime itself. Google Cloud Functions is
+launching the Go runtime soon -- and check out the demo from GopherCon 2018 in
+Denver. Kelsey Hightower gave an amazing demo of this excellent product. Not to
+mention Kubernetes and Knative -- both written in Go.
+
+There are a ton more things written in Go that power Google Cloud. I wish I
+could talk about them all, but I'm glad I got to give you a little peek behind
+the scenes. I'll be around today and I'll be happy to answer any questions you
+have. Please feel free to pull me aside.
+
+# slide 26
+
+Oh, I almost forgot! It may have taken seven years but GOMAXPROCS is no longer
+hardcoded to 1! Go write some concurrent programs!
+
+# slide 27
+
+Thank you so much!
 
 
 
