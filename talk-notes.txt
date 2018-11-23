@@ -283,7 +283,15 @@ The new way gets rid of all that. You set up your webserver exactly like you
 would on any other platform. import net/http, call ListenAndServe on PORT, and
 you're good to go.
 
-[TODO: demo?]
+[ Demo the old way and the new way.
+1. show the old helloworld. highlight appengine.Main. Show running it without
+   dev_appserver, and that it fails.
+2. show the new helloworld. Show running locally. Show app.yaml. Show deployment.
+3. Show old vendor failing. Explain problem with the builder?
+4. Show new vendor succeeding.
+5. Show new go.mod helloworld succeeding.]
+
+# slide 23
 
 
 
