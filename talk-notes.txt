@@ -108,11 +108,7 @@ This meant a few key features:
 - No need for package main Remember that we launched before Go 1.0, and before
   many best practices had emerged, so not requiring package main wasn't so
   crazy at the time. Instead, you would register your HTTP listeners in various
-  init() funcs and we would synthesize a main package for you. You can still
-  see how this works if you're using Go 1.9 on app engine:
-
-TODO TODO
-``` path/to/go-app-builder foo.go cat /tmp/foobar/main.go ```
+  init() funcs and we would synthesize a main package for you.
 
 This is neat, but it also meant that go-app-builder diverged over time from `go
 build`. This is the primary reason that we never got support for vendoring. I
