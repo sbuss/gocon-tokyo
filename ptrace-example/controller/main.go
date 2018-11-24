@@ -16,10 +16,10 @@ func main() {
 	}
 
 	// Uncomment to EPERM on os.Open
-	// id, err := seccomp.GetSyscallFromName("openat")
-	// filter, _ := seccomp.NewFilter(seccomp.ActAllow)
-	// filter.AddRule(id, seccomp.ActErrno.SetReturnCode(int16(syscall.EPERM)))
-	// filter.Load()
+	id, _ := seccomp.GetSyscallFromName("openat")
+	filter, _ := seccomp.NewFilter(seccomp.ActAllow)
+	filter.AddRule(id, seccomp.ActErrno.SetReturnCode(int16(syscall.EPERM)))
+	filter.Load()
 
 	// Set up the child command to run
 	cmd := exec.Command(os.Args[1], os.Args[2:]...)
