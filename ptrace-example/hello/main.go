@@ -8,6 +8,7 @@ import (
 
 func main() {
 	fmt.Println("Hello world!")
+
 	fn := filepath.Join(os.Getenv("HOME"), "foo.txt")
 	f, err := os.Open(fn)
 	if err != nil {
