@@ -9,10 +9,11 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"runtime"
 )
 
 func main() {
-	http.HandleFunc("/", indexHandler)
+	http.HandleFunc("/", handle)
 
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -22,6 +23,7 @@ func main() {
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
 }
 
-func indexHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Hello, World!")
+func handle(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(w, "Hello, world!")
+	fmt.Fprintf(w, "Running go version: %s\n", runtime.Version())
 }

@@ -7,6 +7,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"runtime"
 
 	"google.golang.org/appengine"
 )
@@ -18,4 +19,5 @@ func main() {
 
 func handle(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "Hello, world!")
+	fmt.Fprintf(w, "Running go version: %s\n", runtime.Version())
 }
