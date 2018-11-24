@@ -300,7 +300,7 @@ First let's look at the old way of writing a service for Go on App Engine:
 
 The old way is straightforward: import google.golang.org/appengine, call
 appengine.Main(), and then things work. The downside of this is that, in order
-to run your app locally, you had to use dev_appserver.py or goapp.
+to run your app locally, you had to use dev\_appserver.py or goapp.
 
 # slide 22
 
@@ -337,7 +337,7 @@ back as needed.
 
 # slide 24
 
-check out this URLs to learn how to migrate. Or, you know, just look on
+check out these URLs to learn how to migrate. Or, you know, just look on
 stack overflow.
 
 # slide 25
