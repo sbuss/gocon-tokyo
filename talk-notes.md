@@ -16,10 +16,10 @@ So, Act 1: The beginning.
 
 # slide 3
 
-App Engine was the first cloud hosting service. We started with Python in 2008
-and then added Go as our second runtime in May 2011. That was version r57.2,
-which obviously predated Go 1.0. It launched with a number of limitations,
-similar to the limitations in the original Python runtime:
+App Engine was the first serverless platform. We started with Python in 2008
+and then added Go in May 2011. That was version r57.2, which obviously predated
+Go 1.0. It launched with a number of limitations, similar to the limitations in
+the original Python runtime:
 
 # slide 4
 
@@ -41,8 +41,11 @@ similar to the limitations in the original Python runtime:
 
 # slide 5
 
-In addition to limiting the standard library of Go, we ran apps in a multi-tier
-sandbox to keep our customers safe.
+App Engine's purpose is to run untrusted code on Google servers with no virtual
+machine necessary. What could possibly go wrong?
+
+Well, a lot, so in addition to limiting the standard library of Go, we ran apps
+in a multi-tier sandbox to keep our customers safe.
 
 # slide 6
 
@@ -99,12 +102,11 @@ to fix that.
 
 # slide 8
 
-[5 minutes]
+[6:30 minutes]
 
-We use ptrace to monitor all of the syscalls your app makes, so here's a little
-demo to show what using the ptrace syscall looks like.
-
-[CHANGE TO ptrace-example]
+As I mentioned already, we use ptrace to monitor all of the syscalls your app
+makes, so here's a little demo to show what using the ptrace syscall looks
+like.
 
 First, I want to give a BIG thank you to Liz Rice, this example is a slightly
 modified version of her code from her talk at GopherCon 2017 titled "A Go
@@ -112,8 +114,11 @@ Programmer's Guide to Syscalls". I really encourage you to go watch her talk
 and read her code. She goes into much more detail than I am, and I learned a
 good deal from it.
 
+[CHANGE TO ptrace-example]
 [give demo. show the helloworld program, show how ptrace can intercept every
 syscall, and show how a syscall can be filtered]
+
+[ 16:30 minutes ]
 
 # slide 9
 
@@ -133,11 +138,12 @@ that our second generation runtime was ready for Go 1.11.
 
 - Also, we support apps that aren't on the GOPATH. In fact, go on App Engine
   predates both cmd/go and GOPATH. We *still* don't require you to develop
-  inside GOPATH. Even with Go 1.11's first-class support for GOPATH, you can
-  use go modules which don't need to be on GOPATH either.
+  inside GOPATH. Even with Go 1.11, you can use go modules which don't need to
+  be on GOPATH either.
 
 - We added the appengine package to the standard library which gave easy access
-  to the App Engine APIs
+  to the App Engine APIs, which also meant we had to distribute a custom
+  version of Go, which isn't great.
 - You could call this a feature or not: we didn't support
   net/http.ListenAndServe because we didn't have a real network stack, instead
   we set up the webserver on your behalf. If you used App Engine prior to Go
@@ -145,11 +151,12 @@ that our second generation runtime was ready for Go 1.11.
   networking inside App Engine. If you are using Go 1.11, you can finally use
   ListenAndServe and everything works normally.
 
+[ 19:40 ]
 
-# slide 10 [8 minutes]
+# slide 10
 
-App Engine had a great start back in 2011. But Go has changed a lot since then,
-and we haven't always done a good job keeping up. Act 2: The journey
+Go on App Engine had a great start back in 2011. But Go has changed a lot since
+then, and we haven't always done a good job keeping up. Act 2: The journey
 
 # slide 11
 
@@ -196,6 +203,8 @@ changing a config file, running the build, and then going through the internal
 validation. It should dramatically reduce the delay between the golden Go
 releases and App Engine Go releases.
 
+[ 22:40 ]
+
 # slide 14
 
 In addition to all that, sometimes the Go 1 compatibility promise doesn't quite
@@ -206,6 +215,7 @@ upgrading your Go version isn't something you want all the time. Our next
 generation runtimes currently pin you to a version by default.
 
 # slide 15
+[ 23:30 ]
 
 So that's how we got here, what's ahead? Act 3: The Next Generation
 
@@ -262,19 +272,21 @@ as developers, some of the failures you might experience from an unimplemented
 or buggy syscall might be hard to debug. It will keep improving, though.
 
 # slide 19
+[ 27:00 ]
 
 The basic idea of gVisor is simple: run an untrusted binary on a guest kernel
 which acts as a sandbox. Depending on the syscall, gVisor either reimplements
 it or passes it through to the base kernel. This kind of functions like ptrace,
-in that all syscalls can be inspected, but rather than killing a process when
-it uses a dangerous syscall, it instead gets a safe reimplementation that only
-runs inside the security sandbox.
+in that all syscalls can be inspected, but rather than killing a process or
+returning EPERM when it uses a dangerous syscall, it instead gets a safe
+reimplementation that only runs inside the security sandbox.
 
 [ Demo ptrace helloworld running under gVisor. Show logs in /tmp/runsc ]
 
 
 # slide 20
 
+[ 31:00 ]
 The extensible architecture is quite clever. devices and files can be
 implemented as 'gofers'. These isolate external communication from the secure
 kernel. This allows both security isolation so that, for example, mistakes in
@@ -285,7 +297,7 @@ your app which actually goes out over our internal network to your cloudsql
 database.
 
 Under gVisor, rather than patch the net and os packages, we can instead run
-unmodified Go, with syscalls handled by the by the gVIsor sentry, and net and
+unmodified Go, with syscalls handled by the gVIsor sentry, and net and
 file access handled by the Gofers. I really can't praise gVisor enough; you
 should all go check it out, you can build really incredible things wth it.
 
@@ -318,6 +330,8 @@ you're good to go.
 5. Show new go.mod helloworld succeeding.]
 
 # slide 23
+
+[ 36:00 ]
 
 Ok, so you get all this good stuff, what's the catch? Well... you should start
 migrating away from the legacy App Engine APIs and toward the cloud APIs.
@@ -363,6 +377,8 @@ hardcoded to 1! Go write some concurrent programs!
 # slide 27
 
 Thank you so much!
+
+[ 39:45 ]
 
 
 
