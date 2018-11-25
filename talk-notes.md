@@ -275,11 +275,12 @@ or buggy syscall might be hard to debug. It will keep improving, though.
 [ 27:00 ]
 
 The basic idea of gVisor is simple: run an untrusted binary on a guest kernel
-which acts as a sandbox. Depending on the syscall, gVisor either reimplements
-it or passes it through to the base kernel. This kind of functions like ptrace,
-in that all syscalls can be inspected, but rather than killing a process or
-returning EPERM when it uses a dangerous syscall, it instead gets a safe
-reimplementation that only runs inside the security sandbox.
+which acts as a sandbox. Depending on the syscall, gVisor reimplements every
+syscall, though for some syscalls it ends up simply calling the same syscall
+on the system. This kind of functions like ptrace, in that all syscalls can be
+inspected, but rather than killing a process or returning EPERM when it uses a
+dangerous syscall, it instead gets a safe reimplementation that only runs
+inside the security sandbox.
 
 [ Demo ptrace helloworld running under gVisor. Show logs in /tmp/runsc ]
 
